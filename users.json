@@ -10,5 +10,11 @@
     "name": "Srishti Kumari",
     "address": "Kolkata, West Bengal",
     "role": "Seller"
+  },
+  {
+    "phone_number": 12345,
+    "name": "Alice",
+    "address": "India",
+    "role": "Seller"
   }
 ]

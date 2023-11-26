@@ -1,0 +1,18 @@
+[
+  {
+    "owner": {
+      "phone_number": 12345,
+      "name": "Alice",
+      "address": "India",
+      "role": "Seller"
+    },
+    "name": "Alice's Shop",
+    "items": [
+      {
+        "quantity": 150,
+        "name": "Pencil",
+        "price": 10.0
+      }
+    ]
+  }
+]

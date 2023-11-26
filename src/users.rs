@@ -67,3 +67,12 @@ pub fn read_all_users() -> io::Result<Vec<User>> {
     Ok(user_list)
 }
 
+pub fn find_user_by_phone_number(phone_number: u64) -> Option<User> {
+    let user_list = match read_all_users() {
+        Ok(list) => list,
+        Err(_) => Vec::new()
+    };
+
+    user_list.into_iter().find(|u| u.phone_number == phone_number)
+}
+
