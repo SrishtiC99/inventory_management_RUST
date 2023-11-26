@@ -1,0 +1,14 @@
+[
+  {
+    "phone_number": 12345677777,
+    "name": "Srishti Kumari",
+    "address": "Nalanda, Bihar",
+    "role": "Customer"
+  },
+  {
+    "phone_number": 222222222222222,
+    "name": "Srishti Kumari",
+    "address": "Kolkata, West Bengal",
+    "role": "Seller"
+  }
+]
