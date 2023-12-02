@@ -16,10 +16,10 @@ pub struct Shop {
 }
 
 impl Shop {
-    fn new(user: User, name: &str) -> Self{
+    fn new(user: User, name: String) -> Self{
         Shop {
             owner: user,
-            name: name.to_string(),
+            name,
             items: Vec::new()
         }
     }
@@ -36,10 +36,10 @@ impl Shop {
 }
 
 
-pub fn create_shop(owner_phone_number: u64, name: &str) {
+pub fn create_shop(owner_phone_number: u64, shop_name: String) {
     
     if exist_shop_by_phone_number(owner_phone_number) {
-        println!("You already have a shop...\n");
+        println!("You already have a shop: {shop_name}...\n");
         return;
     }
 
@@ -47,7 +47,7 @@ pub fn create_shop(owner_phone_number: u64, name: &str) {
     match owner {
         Some(user) => {
             if user.role == UserRole::Seller {
-                let new_shop = Shop::new(user, name);
+                let new_shop = Shop::new(user, shop_name);
 
                 let mut shop_list = match read_all_shop() {
                     Ok(list) => list,
@@ -55,7 +55,7 @@ pub fn create_shop(owner_phone_number: u64, name: &str) {
                 };
                 shop_list.push(new_shop);
 
-                if let Err(err) = file_utils::save_file("shop.json", &shop_list) {
+                if let Err(err) = file_utils::save_file(String::from("shop.json"), &shop_list) {
                     eprintln!("Error saving shop list: {}", err);
                 }
 
@@ -71,17 +71,17 @@ pub fn create_shop(owner_phone_number: u64, name: &str) {
     }
 }
 
-pub fn add_item(phone_number: u64, item_name: &str, price: f64, quantity: u32) {
+pub fn add_item(phone_number: u64, item_name: String, price: f64, quantity: u32) {
     let mut shop_list = match read_all_shop() {
         Ok(list) => list,
         Err(_) => Vec::new()
     };
 
     if let Some(shop) = shop_list.iter_mut().find(|sh| sh.owner.phone_number == phone_number) {
-        let item = Item { quantity: quantity, name: item_name.to_string(), price: price };
+        let item = Item { quantity: quantity, name: item_name, price: price };
         shop.items.push(item);
 
-        if let Err(err) = file_utils::save_file("shop.json", &shop_list) {
+        if let Err(err) = file_utils::save_file(String::from("shop.json"), &shop_list) {
             eprintln!("Error saving shop list: {}", err);
         }
     }
@@ -92,7 +92,7 @@ pub fn add_item(phone_number: u64, item_name: &str, price: f64, quantity: u32) {
     println!("Item added successfully!");
 }
 
-pub fn update_item_quantity(phone_number: u64, item_name: &str, quantity: u32) {
+pub fn update_item_quantity(phone_number: u64, item_name: String, quantity: u32) {
     
     let mut shop_list = match read_all_shop() {
         Ok(list) => list,
@@ -103,7 +103,7 @@ pub fn update_item_quantity(phone_number: u64, item_name: &str, quantity: u32) {
         if let Some(item) = shop.items.iter_mut().find(|i| i.name == item_name) {
             item.quantity = quantity;
 
-            if let Err(err) = file_utils::save_file("shop.json", &shop_list) {
+            if let Err(err) = file_utils::save_file(String::from("shop.json"), &shop_list) {
                 eprintln!("Error saving shop list: {}", err);
             }
         }
@@ -117,7 +117,7 @@ pub fn update_item_quantity(phone_number: u64, item_name: &str, quantity: u32) {
 }
 
 pub fn read_all_shop() -> io::Result<Vec<Shop>>{
-    let contents = file_utils::read_file("shop.json");
+    let contents = file_utils::read_file(String::from("shop.json"));
     let shop_list: Vec<Shop> = serde_json::from_str(&contents).expect("Error deserializing file data");
     Ok(shop_list)
 }

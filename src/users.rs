@@ -18,17 +18,17 @@ pub struct User {
 
 impl User {
     
-    fn new(phone_number: u64, name: &str, address: &str, role: UserRole) -> Self {
+    fn new(phone_number: u64, name: String, address: String, role: UserRole) -> Self {
         User {
             phone_number,
-            name: name.to_string(),
-            address: address.to_string(),
+            name,
+            address,
             role
         }
     }
 }
 
-pub fn register_user(phone_number: u64, name: &str, address: &str) {
+pub fn register_user(phone_number: u64, name: String, address: String) {
     let new_user = User::new(phone_number, name, address, UserRole::Customer);
     let mut user_list = match read_all_users() {
         Ok(list) => list,
@@ -36,7 +36,7 @@ pub fn register_user(phone_number: u64, name: &str, address: &str) {
     };
     user_list.push(new_user);
 
-    if let Err(err) = file_utils::save_file("users.json", &user_list) {
+    if let Err(err) = file_utils::save_file(String::from("users.json"), &user_list) {
         eprintln!("Error saving user list: {}", err);
     }
     println!("User has been registered successfully!!\n");
@@ -55,14 +55,14 @@ pub fn make_business_account(phone_number: u64) {
         println!("User not found");
     }
     
-    if let Err(err) = file_utils::save_file("users.json", &user_list) {
+    if let Err(err) = file_utils::save_file(String::from("users.json"), &user_list) {
         eprintln!("Error saving user list: {}", err);
     }
     println!("Thank you for subscribing to bussiness account\n!");
 }
 
 pub fn read_all_users() -> io::Result<Vec<User>> {
-    let contents = file_utils::read_file("users.json");
+    let contents = file_utils::read_file(String::from("users.json"));
     let user_list: Vec<User> = serde_json::from_str(&contents).expect("Error deserializing file data");
     Ok(user_list)
 }

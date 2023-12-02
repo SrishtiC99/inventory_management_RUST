@@ -14,5 +14,21 @@
         "price": 10.0
       }
     ]
+  },
+  {
+    "owner": {
+      "phone_number": 23456,
+      "name": "Bob",
+      "address": "Japan",
+      "role": "Seller"
+    },
+    "name": "Bob's wonderland",
+    "items": [
+      {
+        "quantity": 150,
+        "name": "icecream",
+        "price": 100.0
+      }
+    ]
   }
 ]

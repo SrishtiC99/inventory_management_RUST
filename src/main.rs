@@ -24,7 +24,7 @@ fn register_user() {
     let address: String = input.trim_end().to_string();
     input.clear();
 
-    users::register_user(phone_number, &name, &address);
+    users::register_user(phone_number, name, address);
 }
 
 fn make_business_account() {
@@ -71,7 +71,7 @@ fn create_shop() {
     stdin().read_line(&mut input).expect("Did not receive anything, pleae try again!\n\n");
     let name: String = input.trim_end().to_string();
 
-    shop::create_shop(phone_number, &name);
+    shop::create_shop(phone_number, name);
 }
 
 fn add_item() {
@@ -96,7 +96,7 @@ fn add_item() {
     stdin().read_line(&mut input).expect("Did not receive anything, pleae try again!\n\n");
     let price: f64 = input.trim_end().parse().expect("Could not parse price");
 
-    shop::add_item(phone_number, &name, price, quantity);
+    shop::add_item(phone_number, name, price, quantity);
 }
 
 fn update_item_quantity() {
@@ -117,7 +117,7 @@ fn update_item_quantity() {
     let quantity: u32 = input.trim_end().parse().expect("Could not parse quantity");
     input.clear();
 
-    shop::update_item_quantity(phone_number, &name, quantity);
+    shop::update_item_quantity(phone_number, name, quantity);
 
 }
 

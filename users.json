@@ -16,5 +16,17 @@
     "name": "Alice",
     "address": "India",
     "role": "Seller"
+  },
+  {
+    "phone_number": 999999999,
+    "name": "Tom",
+    "address": "LA",
+    "role": "Customer"
+  },
+  {
+    "phone_number": 23456,
+    "name": "Bob",
+    "address": "Japan",
+    "role": "Seller"
   }
 ]
