@@ -116,6 +116,35 @@ pub fn update_item_quantity(phone_number: u64, item_name: String, quantity: u32)
     }
 }
 
+pub fn purchase_item(shop_name: String, item_name: String, quantity: u32) -> bool {
+    let mut shop_list = match read_all_shop() {
+        Ok(list) => list,
+        Err(_) => Vec::new()
+    };
+
+    if let Some(shop) = shop_list.iter_mut().find(|sh| sh.name == shop_name) {
+        if let Some(item) = shop.items.iter_mut().find(|i| i.name == item_name) {
+            if item.quantity < quantity {
+                println!("We only have {} {} in our stock", item.quantity, item.name);
+            }
+            else {
+                item.quantity -= quantity;
+                if let Err(err) = file_utils::save_file(String::from("shop.json"), &shop_list) {
+                    eprintln!("Error saving shop list: {}", err);
+                }
+                return true;
+            }
+        }
+        else {
+            println!("Item: {item_name} not found");
+        }
+    }
+    else {
+        println!("Shop: {shop_name} not found");
+    }
+    false
+}
+
 pub fn read_all_shop() -> io::Result<Vec<Shop>>{
     let contents = file_utils::read_file(String::from("shop.json"));
     let shop_list: Vec<Shop> = serde_json::from_str(&contents).expect("Error deserializing file data");

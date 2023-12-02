@@ -132,19 +132,44 @@ fn show_all_shops() {
     }
 }
 
+fn purchase_item() {
+    println!("Please provide the Shop name: ");
+    let mut input = String::new();
+    stdin().read_line(&mut input).expect("Did not receive any input, please try again!\n\n");
+    let shop_name = input.trim_end().to_string();
+    input.clear();
+
+    println!("Please provide the item name: ");
+    stdin().read_line(&mut input).expect("Did not receive any input, please try again!\n\n");
+    let item_name = input.trim_end().to_string();
+    input.clear();
+    
+    println!("Please provide the quantity: ");
+    stdin().read_line(&mut input).expect("Did not receive any input, please try again!\n\n");
+    let quantity: u32 = input.trim_end().parse().expect("Please provide a valid integer number");
+
+    let success = shop::purchase_item(shop_name, item_name, quantity);
+
+    if success {
+        println!("Yeeyyy your order is confirmed!!")
+    }
+
+}
+
 fn main() {
     println!("Welcome to our inventory System..\n");
 
     loop {
         println!("Please choose your action...\n");
-        println!("Enter 1: for registration");
-        println!("Enter 2: for business account");
-        println!("Enter 3: for all users data");
-        println!("Enter 4: for creating a new shop");
-        println!("Enter 5: for adding an item to a shop");
-        println!("Enter 6: for updating quantity of an item");
-        println!("Enter 7: show all shops\n");
-        println!("Enter 8: EXIT\n");
+        println!("Enter 1: Register a new user");
+        println!("Enter 2: Subscribe to business account");
+        println!("Enter 3: Show all users");
+        println!("Enter 4: Create a new shop");
+        println!("Enter 5: Add an item to a shop");
+        println!("Enter 6: Updating quantity of an item");
+        println!("Enter 7: Show all shops");
+        println!("Enter 8: Purchase an item");
+        println!("Enter 9: EXIT\n");
 
         let mut input = String::new();
         stdin().read_line(&mut input).expect("Did not receive anything, pleae try again!\n\n");
@@ -156,7 +181,8 @@ fn main() {
             "5" => add_item(),
             "6" => update_item_quantity(),
             "7" => show_all_shops(),
-            "8" => break,
+            "8" => purchase_item(),
+            "9" => break,
             _ => println!("Invalid input. Please try again!\n\n")
         }
     }
