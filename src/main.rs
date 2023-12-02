@@ -39,10 +39,7 @@ fn make_business_account() {
 }
 
 fn show_all_users() {
-    let user_list = match users::read_all_users() {
-        Ok(list) => list,
-        Err(_) => Vec::new()
-    };
+    let user_list = users::get_all_users();
 
     for user in &user_list {
         println!("Name: {}, Phone Number: {}, Address: {}, \nBussiness Account: {}\n------------------------\n\n", 
@@ -122,10 +119,7 @@ fn update_item_quantity() {
 }
 
 fn show_all_shops() {
-    let shop_list = match shop::read_all_shop() {
-        Ok(list) => list,
-        Err(_) => Vec::new()
-    };
+    let shop_list = shop::get_all_shop();
 
     for shop in &shop_list {
         println!("{:?}\n------------------------\n", shop);
@@ -157,7 +151,7 @@ fn purchase_item() {
 }
 
 fn main() {
-    println!("Welcome to our inventory System..\n");
+    println!("\n\nWelcome to our inventory System...");
 
     loop {
         println!("Please choose your action...\n");
